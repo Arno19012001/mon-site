@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Une surprise pour toi</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+      color: white;
+    }
+
+    .container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      z-index: 2;
+    }
+
+    #askButton {
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      background-color: #ff6ec7;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    #askButton:hover {
+      transform: scale(1.1);
+    }
+
+    #message {
+      font-size: 2.5rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.8s ease;
+      max-width: 90%;
+      display: none;
+    }
+
+    .show-message {
+      display: block !important;
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+
+    #choiceButtons {
+      margin-top: 30px;
+      display: none;
+      gap: 20px;
+    }
+
+    .choice {
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .yes {
+      background-color: #66ff99;
+    }
+
+    .no {
+      background-color: #ff6666;
+      position: relative;
+    }
+
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #finalMessage {
+      font-size: 2.2rem;
+      margin-top: 40px;
+      animation: fadeInUp 1.5s ease forwards;
+      display: none;
+    }
+
+    #countdown {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      display: none;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="fireworksCanvas"></canvas>
+
+<div class="container">
+  <button id="askButton">Clique ici 🎯</button>
+  <div id="message">Inès Vangansbek veux-tu venir au bal avec moi ? 💃 </div>
+  <div id="choiceButtons">
+    <button class="choice yes">Oui !! 😍</button>
+    <button class="choice no" id="noButton">Non 😳</button>
+  </div>
+  <div id="finalMessage">🎉 Trop content !! Rendez-vous au bal ! 💃🕺</div>
+  <div id="countdown"></div>
+</div>
+
+<!-- Musique 1 : après premier clic -->
+<audio id="musicIntro" src="https://www.bensound.com/bensound-music/bensound-love.mp3" preload="auto"></audio>
+
+<!-- Musique 2 : après clic sur Oui -->
+<audio id="musicYes" src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" preload="auto"></audio>
+
+<script>
+  const button = document.getElementById('askButton');
+  const message = document.getElementById('message');
+  const choices = document.getElementById('choiceButtons');
+  const noBtn = document.getElementById('noButton');
+  const finalMessage = document.getElementById('finalMessage');
+  const countdown = document.getElementById('countdown');
+  const musicIntro = document.getElementById('musicIntro');
+  const musicYes = document.getElementById('musicYes');
+
+  button.addEventListener('click', () => {
+    button.style.display = 'none';
+    message.classList.add('show-message');
+    musicIntro.play();
+
+    setTimeout(() => {
+      choices.style.display = 'flex';
+    }, 1000);
+  });
+
+  noBtn.addEventListener('mouseover', () => {
+    const x = Math.random() * 300 - 150;
+    const y = Math.random() * 300 - 150;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  document.querySelector('.yes').addEventListener('click', () => {
+    musicIntro.pause();
+    musicYes.play();
+    message.style.display = 'none';
+    choices.style.display = 'none';
+
+    startFireworks();
+    finalMessage.style.display = 'block';
+    countdown.style.display = 'block';
+    startCountdown(new Date("2025-04-25T19:00:00")); // 🎯 Date du bal ici
+  });
+
+  function startCountdown(eventDate) {
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      if (distance < 0) {
+        countdown.innerText = "🎊 C'est le grand soir !";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `⏳ Dans ${days}j ${hours}h ${minutes}min ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+
+  function startFireworks() {
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+
+    function createParticle(x, y) {
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x, y,
+          speed: Math.random() * 5 + 2,
+          angle: Math.random() * 2 * Math.PI,
+          radius: Math.random() * 2 + 1,
+          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+          life: 100
+        });
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0,0,0,0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, index) => {
+        p.life--;
+        if (p.life <= 0) {
+          particles.splice(index, 1);
+        } else {
+          p.x += Math.cos(p.angle) * p.speed;
+          p.y += Math.sin(p.angle) * p.speed;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    setInterval(() => {
+      createParticle(Math.random() * canvas.width, Math.random() * canvas.height / 2);
+    }, 800);
+
+    animate();
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
