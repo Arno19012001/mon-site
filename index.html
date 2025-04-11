@@ -108,9 +108,18 @@
       bottom: 20px;
       right: 20px;
       width: 300px;
-      opacity: 0.8;
+      opacity: 0;
       z-index: 0;
       border-radius: 15px;
+      transform: scale(0.9);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      display: none;
+    }
+
+    .show-face {
+      display: block !important;
+      opacity: 1 !important;
+      transform: scale(1) !important;
     }
 
     @keyframes fadeInUp {
@@ -129,7 +138,7 @@
 
 <canvas id="fireworksCanvas"></canvas>
 
-<!-- Image dans le fond -->
+<!-- Image à afficher après clic sur "Oui" -->
 <img id="backgroundFaces" src="bal.png" alt="Inès et fond romantique" />
 
 <div class="container">
@@ -155,6 +164,7 @@
   const countdown = document.getElementById('countdown');
   const musicIntro = document.getElementById('musicIntro');
   const musicYes = document.getElementById('musicYes');
+  const backgroundImage = document.getElementById('backgroundFaces');
 
   button.addEventListener('click', () => {
     button.style.display = 'none';
@@ -179,6 +189,9 @@
     message.classList.remove('show-message');
     message.style.display = 'none';
     choices.style.display = 'none';
+
+    // 👉 Afficher l'image avec effet
+    backgroundImage.classList.add('show-face');
 
     startFireworks();
     finalMessage.style.display = 'block';
@@ -260,6 +273,7 @@
 
 </body>
 </html>
+
 
 
 
