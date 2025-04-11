@@ -113,12 +113,10 @@
       z-index: 0;
       border-radius: 15px;
       transform: scale(0.9);
-      transition: opacity 1.2s ease, transform 1.2s ease, visibility 0s 1.2s; /* Transition pour que la visibilité ne soit activée qu'à la fin de l'animation */
-      display: none;
+      transition: opacity 1.2s ease, transform 1.2s ease; /* Pas de transition de visibility */
     }
 
     .show-face {
-      display: block !important;
       opacity: 1 !important;
       transform: scale(1) !important;
       visibility: visible !important; /* Rendre l'image visible après l'animation */
@@ -275,6 +273,7 @@
 
 </body>
 </html>
+
 
 
 
