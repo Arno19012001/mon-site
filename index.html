@@ -103,23 +103,18 @@
       animation: fadeInUp 1s ease forwards;
     }
 
+    /* Enlever l'effet d'animation sur l'image pour qu'elle soit visible directement */
     #backgroundFaces {
       position: absolute;
       bottom: 20px;
       right: 20px;
       width: 300px;
-      opacity: 0; /* On garde l'opacité à 0 au départ */
-      visibility: hidden; /* Cachée au départ */
+      opacity: 1; /* L'image est visible dès le départ */
+      visibility: visible; /* Assurer que l'image soit visible */
       z-index: 0;
       border-radius: 15px;
-      transform: scale(0.9);
-      transition: opacity 1.2s ease, transform 1.2s ease; /* Pas de transition de visibility */
-    }
-
-    .show-face {
-      opacity: 1 !important;
-      transform: scale(1) !important;
-      visibility: visible !important; /* Rendre l'image visible après l'animation */
+      transform: scale(1);
+      display: block; /* Affichage immédiat */
     }
 
     @keyframes fadeInUp {
@@ -190,10 +185,7 @@
     message.style.display = 'none';
     choices.style.display = 'none';
 
-    // 👉 Afficher l'image avec effet
-    backgroundImage.classList.add('show-face'); // Garder l'image visible
-
-    startFireworks();
+    // 👉 L'image est déjà visible sans animation, donc aucune autre action n'est nécessaire
     finalMessage.style.display = 'block';
     countdown.style.display = 'block';
     startCountdown(new Date("2025-04-25T19:00:00"));
@@ -273,6 +265,7 @@
 
 </body>
 </html>
+
 
 
 
