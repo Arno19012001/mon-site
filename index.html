@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Une surprise pour toi</title>
+  <title>Mon site</title>
   <style>
     body {
       margin: 0;
@@ -103,6 +103,16 @@
       animation: fadeInUp 1s ease forwards;
     }
 
+    #backgroundFaces {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      opacity: 0.8;
+      z-index: 0;
+      border-radius: 15px;
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -119,21 +129,21 @@
 
 <canvas id="fireworksCanvas"></canvas>
 
+<!-- Image dans le fond -->
+<img id="backgroundFaces" src="bal.png" alt="Inès et fond romantique" />
+
 <div class="container">
   <button id="askButton">Clique ici 🎯</button>
-  <div id="message">Inès Vangansbek veux-tu venir au bal avec moi ? 💃 </div>
+  <div id="message">Inès Vangansbek voulez-vous venir au bal avec moi ? 💃 </div>
   <div id="choiceButtons">
     <button class="choice yes">Oui !! 😍</button>
     <button class="choice no" id="noButton">Non 😳</button>
   </div>
-  <div id="finalMessage">🎉 Trop content !! Rendez-vous au bal ! 💃🕺</div>
+  <div id="finalMessage">🎉 Wouhou trop content !!! Hâte d'y être ! 💃🕺</div>
   <div id="countdown"></div>
 </div>
 
-<!-- Musique 1 : après premier clic -->
 <audio id="musicIntro" src="https://www.bensound.com/bensound-music/bensound-love.mp3" preload="auto"></audio>
-
-<!-- Musique 2 : après clic sur Oui -->
 <audio id="musicYes" src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" preload="auto"></audio>
 
 <script>
@@ -165,13 +175,15 @@
   document.querySelector('.yes').addEventListener('click', () => {
     musicIntro.pause();
     musicYes.play();
+
+    message.classList.remove('show-message');
     message.style.display = 'none';
     choices.style.display = 'none';
 
     startFireworks();
     finalMessage.style.display = 'block';
     countdown.style.display = 'block';
-    startCountdown(new Date("2025-04-25T19:00:00")); // 🎯 Date du bal ici
+    startCountdown(new Date("2025-04-25T19:00:00"));
   });
 
   function startCountdown(eventDate) {
@@ -248,7 +260,6 @@
 
 </body>
 </html>
-
 
 
 
