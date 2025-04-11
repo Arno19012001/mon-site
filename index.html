@@ -108,11 +108,12 @@
       bottom: 20px;
       right: 20px;
       width: 300px;
-      opacity: 0;
+      opacity: 0; /* On garde l'opacité à 0 au départ */
+      visibility: hidden; /* Cachée au départ */
       z-index: 0;
       border-radius: 15px;
       transform: scale(0.9);
-      transition: opacity 1.2s ease, transform 1.2s ease;
+      transition: opacity 1.2s ease, transform 1.2s ease, visibility 0s 1.2s; /* Transition pour que la visibilité ne soit activée qu'à la fin de l'animation */
       display: none;
     }
 
@@ -120,6 +121,7 @@
       display: block !important;
       opacity: 1 !important;
       transform: scale(1) !important;
+      visibility: visible !important; /* Rendre l'image visible après l'animation */
     }
 
     @keyframes fadeInUp {
@@ -191,7 +193,7 @@
     choices.style.display = 'none';
 
     // 👉 Afficher l'image avec effet
-    backgroundImage.classList.add('show-face');
+    backgroundImage.classList.add('show-face'); // Garder l'image visible
 
     startFireworks();
     finalMessage.style.display = 'block';
