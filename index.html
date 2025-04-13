@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Mon site</title>
-  <meta name="robots" content="noindex, nofollow">
   <style>
     body {
       margin: 0;
@@ -104,17 +103,18 @@
       animation: fadeInUp 1s ease forwards;
     }
 
+    /* Image cachée initialement */
     #backgroundFaces {
       position: absolute;
       bottom: 20px;
       right: 20px;
       width: 300px;
-      opacity: 0;
-      visibility: hidden;
+      opacity: 0; /* L'image est cachée initialement */
+      visibility: hidden; /* L'image est cachée initialement */
       z-index: 0;
       border-radius: 15px;
       transform: scale(1);
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.5s ease, visibility 0.5s ease; /* Transition pour rendre l'image visible */
     }
 
     @keyframes fadeInUp {
@@ -133,6 +133,7 @@
 
 <canvas id="fireworksCanvas"></canvas>
 
+<!-- Image à afficher après clic sur "Oui" -->
 <img id="backgroundFaces" src="bal.png" alt="Inès et fond romantique" />
 
 <div class="container">
@@ -184,13 +185,13 @@
     message.style.display = 'none';
     choices.style.display = 'none';
 
+    // 👉 L'image devient visible après le clic sur "Oui"
     backgroundImage.style.opacity = '1';
     backgroundImage.style.visibility = 'visible';
 
     finalMessage.style.display = 'block';
     countdown.style.display = 'block';
     startCountdown(new Date("2025-04-25T19:00:00"));
-    startFireworks();
   });
 
   function startCountdown(eventDate) {
@@ -267,6 +268,7 @@
 
 </body>
 </html>
+
 
 
 
